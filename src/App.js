@@ -3,8 +3,6 @@ import './App.css';
 import List from './composition/List';
 
 function App(props) {
-  console.log(props.store);
-
   const allCards = props.store.allCards;
   const lists = props.store.lists;
 
@@ -15,10 +13,10 @@ function App(props) {
         console.log(cards)
       return(
         <List 
-      key={list.id} 
-      header={list.header} 
-      cards={cards} 
-      />
+          key={list.id} 
+          header={list.header} 
+          cards={cards} 
+          />
       )
       
       })

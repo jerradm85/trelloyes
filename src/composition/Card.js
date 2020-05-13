@@ -11,4 +11,9 @@ function Card(props) {
     )
 }
 
+Card.defaultProps = {
+  title: "",
+  content: ""
+}
+
 export default Card;

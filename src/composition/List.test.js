@@ -1,20 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import List from './List';
 import renderer from 'react-test-renderer';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  const obj = {lists: [], allCards: {}};
-
-  ReactDOM.render(<App store={obj}/>, div);
+  ReactDOM.render(<List cards={[]}/>, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 
 it('renders the UI as expected', () => {
-  const obj = {lists: [], allCards: {}};
   const tree = renderer
-    .create(<App store={obj}/>)
+    .create(<List />)
     .toJSON();
   expect(tree).toMatchSnapshot();  
 });
