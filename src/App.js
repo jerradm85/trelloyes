@@ -46,10 +46,15 @@ class App extends React.Component {
   }
 
   handleDeleteCard = (listId, cardId) => {
-    const id = this.state.store.lists[listId - 1].cardIds
-    const found = id.find(element => element === cardId)
+    const deleted = this.state.store.lists.map(list => {
+      const filter = list.cardIds.filter(id => id !== cardId)
+      list.cardIds = filter;
+      return list;
+    })
+    const newStore = this.state.store
+    newStore.lists = deleted
     this.setState({
-      store: {}
+      store: newStore
     })
   }
 
