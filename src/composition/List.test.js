@@ -5,7 +5,7 @@ import renderer from 'react-test-renderer';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  ReactDOM.render(<List cards={[]}/>, div);
+  ReactDOM.render(<List />, div);
   ReactDOM.unmountComponentAtNode(div);
 });
 

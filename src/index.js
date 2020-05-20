@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import STORE from './store';
+// import STORE from './store';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App store={STORE} />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
