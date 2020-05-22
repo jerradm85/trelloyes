@@ -46,36 +46,92 @@ class App extends React.Component {
   }
 
   handleDeleteCard = (listId, cardId) => {
-    const deleted = this.state.store.lists.map(list => {
-      const filter = list.cardIds.filter(id => id !== cardId)
-      list.cardIds = filter;
+
+    const findObj = this.state.store.lists.find(list => {
+      if(list.id === listId) {
+        list.cardIds = list.cardIds.filter(id => id !== cardId);
+      }
       return list;
-    })
-    const newStore = this.state.store
-    newStore.lists = deleted
+    });
+    
+    const allCards = {...this.state.store.allCards};
+    const lists = [...this.state.store.lists].map(obj => obj.id !== listId ? obj : findObj);
+
     this.setState({
-      store: newStore
+      store: {
+        lists: lists,
+        allCards: allCards
+      }
+    });
+
+  //   const deleted = this.state.store.lists.map(list => {
+  //     // if the list we are iterating over matches listId
+  //     // remove item in its cardIds array
+  //     if (list.id === listId) {
+  //       const filter = list.cardIds.filter(id => id !== cardId);
+  //       list.cardIds = filter;
+  //       return list;
+  //     }
+
+  //     // if not return the list as is
+  //     return list;
+  //   });
+
+  //   const newStore = {...this.state.store};
+  //   newStore.lists = deleted;
+
+  //   this.setState({
+  //     store: newStore
+  //   });
+  }
+
+  newRandomCard = () => {
+    const id = Math.random().toString(36).substring(2, 4)
+      + Math.random().toString(36).substring(2, 4);
+
+    return {
+      id: id,
+      title: `Random Card ${id}`,
+      content: 'lorem ipsum',
+    }
+  }
+
+  addRandomCard = (id) => {
+    const newCard = this.newRandomCard();
+    const allCards = this.state.store.allCards;
+    allCards[newCard.id] = newCard
+
+    const lists = this.state.store.lists.map((list) => {
+      if(list.id === id) {
+        list.cardIds = [...list.cardIds, newCard.id]
+      }
+      return list;
+    });
+
+    this.setState({
+      store: {
+        lists: lists,
+        allCards: allCards
+      }
     })
   }
 
-  render() {
-    // const allCards = this.state.store.allCards;
-    // const lists = this.state.store.lists;
 
+
+
+  render() {
     const data = this.state.store.lists.map((list) => {
-      // console.log(list.cardIds)
       const cards = list.cardIds.map(cardId => {
         return this.state.store.allCards[cardId]
       })
 
-      // console.log(cards)
       return (
         <List
           key={list.id}
-          listId={list.id}
-          header={list.header}
+          list={list}
           cards={cards}
           onDeleteCard={this.handleDeleteCard}
+          addRandomCard={this.addRandomCard}
         />
       )
 
